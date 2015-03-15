@@ -3,7 +3,7 @@ Schedules shifts taking in account worker preferences and business needs. Curren
 
 Doctors’ preferences are stored in the ‘Medico’ enum, they are then picked up by a genetic algorithm.
 
-Each allele is a Doctor, each gene is a shift and each chromosome is a 24h day.
+Each allele is a doctor, each gene is a shift and each chromosome is a 24h day.
 
 The algorithm takes quite some time to run but the results are already very good.
 
