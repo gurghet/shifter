@@ -42,6 +42,7 @@ public final class GiornataDiTurniChromosome<T>
         implements Serializable {
 
     private ISeq<T> _validAlleles;
+    private int _numTurni;
 
     /**
      * Create a new {@code AbstractChromosome} from the given {@code genes}
@@ -67,9 +68,9 @@ public final class GiornataDiTurniChromosome<T>
      * @since 2.0
      */
     @SafeVarargs
-    public static <T> GiornataDiTurniChromosome<T> of(final T... alleles) {
+    public static <T> GiornataDiTurniChromosome<T> of(int numTurni, final T... alleles) {
         @SuppressWarnings("unchecked")
-        GiornataDiTurniChromosome<T> giornataDiTurniChromosome = (GiornataDiTurniChromosome<T>) of(ISeq.of(alleles));
+        GiornataDiTurniChromosome<T> giornataDiTurniChromosome = (GiornataDiTurniChromosome<T>) of(ISeq.of(alleles), numTurni);
         return giornataDiTurniChromosome;
     }
 
@@ -80,8 +81,8 @@ public final class GiornataDiTurniChromosome<T>
      * @param alleles the valid alleles used for this permutation arrays.
      * @return a new chromosome with the given alleles
      */
-    public static <T> GiornataDiTurniChromosome of(final ISeq<? extends T> alleles) {
-        final ISeq<EnumGene<T>> genes = IntStream.range(0, 4) // da 0 a 3
+    public static <T> GiornataDiTurniChromosome of(final ISeq<? extends T> alleles, int numTurni) {
+        final ISeq<EnumGene<T>> genes = IntStream.range(0, numTurni) // da 0 a 3
                 .mapToObj(i -> EnumGene.of(alleles))
                 .collect(toMSeq())
                 .toISeq();
@@ -90,6 +91,7 @@ public final class GiornataDiTurniChromosome<T>
         final GiornataDiTurniChromosome chromosome = new GiornataDiTurniChromosome(genes);
         chromosome._validAlleles = reflect.cast(alleles);
         chromosome._valid = true;
+        chromosome._numTurni = numTurni;
 
         return chromosome;
     }
@@ -102,7 +104,7 @@ public final class GiornataDiTurniChromosome<T>
     @Override
     @SuppressWarnings("unchecked")
     public Chromosome<EnumGene<T>> newInstance() {
-        return of(_validAlleles);
+        return of(_validAlleles, _numTurni);
     }
 
     @Override
